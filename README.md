@@ -1,3 +1,23 @@
+# Personal Setup
+
+## Defaults
+
+- Download loc: `scratch/`
+
+## Environment setup
+```bash
+# Use a separate env for this.
+conda activate newenv
+python setup.py install
+```
+
+## From each VM launch following
+
+```bash
+# All downloaded data will be removed after generating the final dataset
+python screpts/reddit.py generate -c config_2012.yaml --small
+```
+
 # dstc8-reddit
 
 Reddit corpus construction code for the **DSTC 8 Competition, Multi-Domain End-to-End Track, Task 2: Fast Adaptation**.
