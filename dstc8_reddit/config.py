@@ -211,6 +211,8 @@ class RedditConfig:
       extension = 'xz'
 
     if filetype == 'submissions':
+      print("OVERRIDE RS EXTENSION: zst")
+      extension = 'zst'
       return self.submissions_url_template % (date, extension)
     else:
       return self.comments_url_template % (date, extension)

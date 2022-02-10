@@ -28,6 +28,8 @@ def get_reference_checksum(src_url):
 
   if not checksum:
     raise RuntimeError(f"Couldn't get checksum for {filename}")
+    # print(f"Couldn't get checksum for {filename}")
+    # return ""
 
   return checksum
 
@@ -62,3 +64,4 @@ class DownloadRawFile(luigi.Task):
 
       if checksum != ref_checksum:
         raise RuntimeError(f"Checksums don't match for {'RC' if self.filetype == 'comments' else 'RS'}_{self.date}!")
+        # print(f"Checksums don't match for {'RC' if self.filetype == 'comments' else 'RS'}_{self.date}!")
