@@ -6,8 +6,8 @@ is_dev: True
 # sampling_n_per_group: 4
 # manual_dates:
 #   - "2015-02"
-min_year: "2018"
-max_year: "2018"
+min_year: "2009"
+max_year: "2009"
 # We will not go beyond 2018-11 (start of .zst)
 min_year_min_month: 1
 max_year_max_month: 12
