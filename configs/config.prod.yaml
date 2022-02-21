@@ -1,4 +1,4 @@
-run_dir: "."
+run_dir: "scratch/"
 max_concurrent_downloads: 4
 held_out_subreddits:
   - 3dprinting
