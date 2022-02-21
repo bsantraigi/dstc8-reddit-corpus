@@ -100,10 +100,13 @@ class RawConfig(BaseModel):
   min_year_min_month: int = 11
   max_year_max_month: int = 10
   # Since checksums aren't available for submissions & comments in the same month
-  submissions_xz_starts_year: int = 2017
-  submissions_xz_starts_month: int = 11
+  # submissions_xz_starts_year: int = 2017
+  # submissions_xz_starts_month: int = 11
   comments_xz_starts_year: int = 2017
   comments_xz_starts_month: int = 12
+  # new format zst
+  comments_zst_starts_year: int = 2018
+  comments_zst_starts_month: int = 10
   download_chunk_size: int = 4 * 2**10
   min_dialogue_length: int = 4
   turn_char_limit: int = -1
@@ -203,16 +206,17 @@ class RedditConfig:
     extension = 'bz2'
 
     if filetype == 'submissions':
-      xz_starts_year, xz_starts_month = self.submissions_xz_starts_year, self.submissions_xz_starts_month
+      extension = 'zst'
     else:
       xz_starts_year, xz_starts_month = self.comments_xz_starts_year, self.comments_xz_starts_month
 
-    if (dt.year > xz_starts_year) or (dt.year == xz_starts_year and dt.month >= xz_starts_month):
-      extension = 'xz'
+      if (dt.year > xz_starts_year) or (dt.year == xz_starts_year and dt.month >= xz_starts_month):
+        extension = 'xz'
+      
+      if (dt.year > self.comments_zst_starts_year) or (dt.year == self.comments_zst_starts_year and dt.month >= self.comments_zst_starts_month):
+        extension = 'zst'
 
     if filetype == 'submissions':
-      print("OVERRIDE RS EXTENSION: zst")
-      extension = 'zst'
       return self.submissions_url_template % (date, extension)
     else:
       return self.comments_url_template % (date, extension)
@@ -225,12 +229,16 @@ class RedditConfig:
     extension = 'bz2'
 
     if filetype == 'submissions':
-      xz_starts_year, xz_starts_month = self.submissions_xz_starts_year, self.submissions_xz_starts_month
+      # xz_starts_year, xz_starts_month = self.submissions_xz_starts_year, self.submissions_xz_starts_month
+      extension = 'zst'
     else:
       xz_starts_year, xz_starts_month = self.comments_xz_starts_year, self.comments_xz_starts_month
 
-    if (dt.year > xz_starts_year) or (dt.year == xz_starts_year and dt.month >= xz_starts_month):
-      extension = 'xz'
+      if (dt.year > xz_starts_year) or (dt.year == xz_starts_year and dt.month >= xz_starts_month):
+        extension = 'xz'
+      
+      if (dt.year > self.comments_zst_starts_year) or (dt.year == self.comments_zst_starts_year and dt.month >= self.comments_zst_starts_month):
+        extension = 'zst'
 
     os.makedirs(self.data_raw_dir, exist_ok=True)
     return os.path.join(self.data_raw_dir, f"{prefix}_{date}.{extension}")
