@@ -6,16 +6,39 @@
 
 ## Environment setup
 ```bash
+apt install zstd
 # Use a separate env for this.
-conda activate newenv
+# Python 3.8 works
+conda create -n dstc8 python=3.8
+conda activate dstc8
 python setup.py install
 ```
+
+## Setup of config.dev.yaml
+
+This is used for testing the code.
+
+**Suggested Year:** 2009
+
+## Production
+
+### File Formats**
+
+#### Comments
+
+- `.bz2` upto 2017-11
+- `.xz` upto 2018-10
+- `.zst` upto 2021-06
+
+#### Submissions 
+
+- `.zst` All years!
 
 ## From each VM launch following
 
 ```bash
 # All downloaded data will be removed after generating the final dataset
-python screpts/reddit.py generate -c config_2012.yaml --small
+python scripts/reddit.py generate -c configs/config.dev.yaml --small
 ```
 
 # dstc8-reddit
