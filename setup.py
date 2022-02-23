@@ -13,6 +13,7 @@ INSTALL_REQUIRES = [
   'python-rapidjson',
   'pyyaml',
   'requests',
+  'zstandard'
 ]
 
 TEST_REQUIRES = [

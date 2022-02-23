@@ -40,3 +40,4 @@ class Patterns:
   XZ_EXT_RGX = re.compile(r'\.xz(\-luigi\-tmp\-\d*)?$')
   GZ_EXT_RGX = re.compile(r'\.(gz|gzip)(\-luigi\-tmp\-\d*)?$')
   TXT_TSV_EXT_RGX = re.compile(r'\.(txt|tsv)(\-luigi\-tmp\-\d*)?$')
+  ZST_EXT_RGX = re.compile(r'\.zst(\-luigi\-tmp\-\d*)?$')
