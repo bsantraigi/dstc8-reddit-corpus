@@ -14,7 +14,19 @@ conda activate dstc8
 python setup.py install
 ```
 
-## Setup of config.dev.yaml
+## From each VM launch following
+
+> Vary the year from 2005 to 2021.
+
+```bash
+# All downloaded data will be kept after generating the final dataset
+# Remove them after you are happy with the data
+# Template: python scripts/reddit.py generate -c configs/prod/{year}.yaml
+
+python scripts/reddit.py generate -c configs/prod/2009.yaml
+```
+
+## Testing: Setup of config.dev.yaml
 
 This is used for testing the code.
 
@@ -33,13 +45,6 @@ This is used for testing the code.
 #### Submissions 
 
 - `.zst` All years!
-
-## From each VM launch following
-
-```bash
-# All downloaded data will be removed after generating the final dataset
-python scripts/reddit.py generate -c configs/config.dev.yaml --small
-```
 
 # dstc8-reddit
 
