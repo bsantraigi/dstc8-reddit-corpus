@@ -1,10 +1,10 @@
-run_dir: "scratch/prod_2016/"
+run_dir: "scratch/prod_2020/"
 max_concurrent_downloads: 4
-min_year: "2016"
-max_year: "2016"
+min_year: "2020"
+max_year: "2020"
 min_year_min_month: 1
 max_year_max_month: 12
-data_zip_path: dstc8-reddit-corpus-2016.zip
+data_zip_path: dstc8-reddit-corpus-2020.zip
 held_out_subreddits:
   - 3dprinting
   - accounting
