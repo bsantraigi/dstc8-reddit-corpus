@@ -5,12 +5,21 @@
 - Download loc: `scratch/`
 
 ## Environment setup
+
 ```bash
+# Ensure you have the latest commit
+git checkout large-scale
+git pull
+
+# Requirement
 apt install zstd
+
 # Use a separate env for this.
 # Python 3.8 works
 conda create -n dstc8 python=3.8
 conda activate dstc8
+
+# This must be run everytime you pull in a new commit/make any change.
 python setup.py install
 ```
 
