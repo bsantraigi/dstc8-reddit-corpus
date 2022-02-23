@@ -22,7 +22,8 @@ class RawSubmissionFilterer:
       if self.subreddits and subreddit not in self.subreddits:
         return None
 
-      if any([x.get('archived', False), x.get('hidden', False), x.get('over_18', False),
+      # Removed the archived filter: x.get('archived', False)
+      if any([x.get('hidden', False), x.get('over_18', False),
               x.get('locked', False)]):
         return None
 
