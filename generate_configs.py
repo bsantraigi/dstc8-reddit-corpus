@@ -11,6 +11,6 @@ data_zip_path: dstc8-reddit-corpus-{yr}.zip
 with open("configs/prod/template_2016.yaml") as f:
     postfix = f.read()
 
-for yr in range(2005, 2021):
+for yr in range(2005, 2022):
     with open(f"configs/prod/{yr}.yaml", "w") as f:
         f.write(prefix.format(yr=yr) + postfix)
