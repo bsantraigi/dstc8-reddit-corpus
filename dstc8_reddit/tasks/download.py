@@ -3,7 +3,7 @@ import requests
 
 from hashlib import sha256
 
-from dstc8_reddit.config import RedditConfig
+from dstc8_reddit.config import RedditConfig, parse_date
 
 
 def get_reference_checksum(src_url):
@@ -14,6 +14,8 @@ def get_reference_checksum(src_url):
 
   checksums_url = RedditConfig().submissions_checksum_url_template if filename.startswith('RS') \
       else RedditConfig().comments_checksum_url_template
+
+  print(f"Downloading checksums for {filename} from {checksums_url}")
 
   r = requests.get(checksums_url)
   if r.status_code != 200:
@@ -34,6 +36,25 @@ def get_reference_checksum(src_url):
   return checksum
 
 
+def ignore_checksum(date, filetype):
+  # Checksums are not available for comment files RC_2019-06.zst to RC_2021-06.zst
+  # Ignore checksums for these files, if it falls within that date range
+  
+  dt = parse_date(date)
+  prefix = 'RS' if filetype == 'submissions' else 'RC'
+  is_ignored = False
+  if (2019 <= dt.year <= 2021) and prefix=="RC":
+    if dt.year == 2019:
+      if dt.month >= 6:
+        is_ignored = True
+    else:
+      is_ignored = True
+
+  print(f"Ignoring checksum for {date} {filetype} {prefix}") if is_ignored else None
+
+  return is_ignored
+
+
 class DownloadRawFile(luigi.Task):
   date = luigi.Parameter()
   filetype = luigi.Parameter()
@@ -46,8 +67,11 @@ class DownloadRawFile(luigi.Task):
   def run(self):
     with self.output().temporary_path() as tmp_path:
       src_url = RedditConfig().make_source_url(self.date, self.filetype)
-      ref_checksum = get_reference_checksum(src_url)
+      is_ignore_checksum = ignore_checksum(self.date, self.filetype)
+      if not is_ignore_checksum:
+        ref_checksum = get_reference_checksum(src_url)
 
+      print(f"Starting download of url: {src_url} => => file: {tmp_path}")
       r = requests.get(src_url, stream=True)
       if r.status_code != 200:
         raise RuntimeError(f"Error downloading {src_url}, status={r.status_code}")
@@ -62,6 +86,6 @@ class DownloadRawFile(luigi.Task):
 
       checksum = m.hexdigest()
 
-      if checksum != ref_checksum:
+      if (checksum != ref_checksum) and not is_ignore_checksum:
         raise RuntimeError(f"Checksums don't match for {'RC' if self.filetype == 'comments' else 'RS'}_{self.date}!")
         # print(f"Checksums don't match for {'RC' if self.filetype == 'comments' else 'RS'}_{self.date}!")
