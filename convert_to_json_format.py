@@ -36,12 +36,10 @@ year = args.year
 training_files = glob.glob(f'./data/{year}/dialogues/training/*.txt')
 
 
-len(training_files)
+print(f"Processing {len(training_files)} training files")
 
 
 MAX_CONV_PER_DOMAIN = float('inf')
-out_dir = './data/reddit_xtreme/' # around 900 train files
-
 
 train_data = []
 for file in tqdm(training_files):
@@ -55,10 +53,8 @@ for file in tqdm(training_files):
         print(f"Loaded {i} samples from {file}")
 
 
-train_data[0]
-
-
-len(train_data)
+print(f"Example: {train_data[0]}")
+print(f"Loaded {len(train_data)} train-samples")
 
 
 _, train_data = filter_dialogs(train_data)
@@ -67,8 +63,7 @@ _, train_data = filter_dialogs(train_data)
 val_files = glob.glob(f'./data/{year}/dialogues/validation_date_in_domain_in/*.txt')
 
 
-len(val_files)
-
+print(f"Processing {len(val_files)} validation files")
 
 val_data = []
 for file in tqdm(val_files):
@@ -82,11 +77,9 @@ for file in tqdm(val_files):
         print(f"Loaded {j} samples from {file}")
 
 
-val_data[0]
+print(f"Example: {val_data[0]}")
 
-
-len(val_data)
-
+print(f"Loaded {len(val_data)} val-samples")
 
 _, val_data = filter_dialogs(val_data)
 
@@ -105,10 +98,9 @@ val_data = val_data[:1000]
 print(f"Train: {len(train_data)}, Val: {len(val_data)}, Test: {len(test_data)}")
 
 
-test_data[0]
+print(f"Example: {test_data[0]}")
 
-
-exp_path = out_dir
+exp_path = './data/reddit_xtreme/'
 try:
     os.makedirs(exp_path)
     print(f"Path {exp_path} created.")
