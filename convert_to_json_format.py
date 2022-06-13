@@ -11,7 +11,7 @@
 # - only extract in-domain validation data
 
 import os, glob, re, json, random
-from tqdm.notebook import tqdm
+from tqdm import tqdm
 from r1m_preprocess import filter_dialogs
 import argparse
 
