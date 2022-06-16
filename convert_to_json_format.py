@@ -90,9 +90,9 @@ random.seed(42)
 random.shuffle(train_data)
 random.shuffle(val_data)
 
-
-test_data = val_data[1000:]
-val_data = val_data[:1000]
+break_point = min(1000, len(val_data)//2)
+test_data = val_data[break_point:]
+val_data = val_data[:break_point]
 
 
 print(f"Train: {len(train_data)}, Val: {len(val_data)}, Test: {len(test_data)}")
@@ -143,7 +143,7 @@ class SplitWriter:
 
 
 # Train
-train_writer = SplitWriter(os.path.join(exp_path, f'train_{year}'), max_split_mb=512)
+train_writer = SplitWriter(os.path.join(exp_path, f'train_{year}'), max_split_mb=256)
 
 for l in train_data:
     train_writer.write(json.dumps({"turns": l})+"\n")
@@ -159,7 +159,7 @@ for l in val_data:
 valid_writer.close()
 
 # Test
-test_writer = SplitWriter(os.path.join(exp_path, f'test_{year}'), max_split_mb=512)
+test_writer = SplitWriter(os.path.join(exp_path, f'test_{year}'), max_split_mb=256)
 
 for l in test_data:
     test_writer.write(json.dumps({"turns": l})+"\n")
